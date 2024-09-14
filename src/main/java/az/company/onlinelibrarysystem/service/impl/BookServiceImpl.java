@@ -1,6 +1,6 @@
 package az.company.onlinelibrarysystem.service.impl;
 
-import az.company.onlinelibrarysystem.exception.ResourceNotFoundException;
+import az.company.onlinelibrarysystem.exception.CustomException;
 import az.company.onlinelibrarysystem.repository.AuthorRepository;
 import az.company.onlinelibrarysystem.repository.BookRepository;
 import az.company.onlinelibrarysystem.dto.BookRequest;
@@ -55,7 +55,7 @@ public class BookServiceImpl implements BookService {
     public BookResponse updateBook(Long id, BookRequest bookRequest) {
         // Fetch existing book by ID
         Book existingBook = bookRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Book not found with id " + id));
+                .orElseThrow(() -> new CustomException("Book not found with id " + id));
 
         // Update book details
         existingBook.setTitle(bookRequest.getTitle());
@@ -76,14 +76,14 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(Long id) {
         Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Book not found with id " + id));
+                .orElseThrow(() -> new CustomException("Book not found with id " + id));
         bookRepository.delete(book);
     }
 
     @Override
     public BookResponse getBookById(Long id) {
         Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Book not found with id " + id));
+                .orElseThrow(() -> new CustomException("Book not found with id " + id));
         return convertToResponse(book);
     }
 
@@ -111,7 +111,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public List<BookResponse> getBooksByAuthor(Long authorId) {
         Author author = authorRepository.findById(authorId)
-                .orElseThrow(() -> new ResourceNotFoundException("Author not found with id " + authorId));
+                .orElseThrow(() -> new CustomException("Author not found with id " + authorId));
         return bookRepository.findBooksByAuthorsContains(author).stream()
                 .map(this::convertToResponse)
                 .collect(Collectors.toList());

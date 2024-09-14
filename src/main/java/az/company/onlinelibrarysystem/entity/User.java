@@ -1,11 +1,13 @@
 package az.company.onlinelibrarysystem.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.util.List;
 
 @Entity
 @Table(name = "users",schema = "library")
+@Data
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,6 +16,8 @@ public class User {
     private String username;
     private String password;
     private String email;
+
+    private Integer status=1;
 
     @Enumerated(EnumType.STRING)
     private Role role;  // Enum for user roles (ADMIN, USER)
@@ -27,6 +31,5 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Review> reviews;
 
-    // Getters and setters
 }
 
