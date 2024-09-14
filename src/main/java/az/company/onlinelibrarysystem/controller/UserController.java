@@ -2,7 +2,7 @@ package az.company.onlinelibrarysystem.controller;
 
 import az.company.onlinelibrarysystem.dto.request.UserRequest;
 import az.company.onlinelibrarysystem.dto.response.UserResponse;
-import az.company.onlinelibrarysystem.entity.Role;
+import az.company.onlinelibrarysystem.enums.Role;
 import az.company.onlinelibrarysystem.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

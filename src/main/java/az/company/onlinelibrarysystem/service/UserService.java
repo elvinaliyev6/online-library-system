@@ -5,8 +5,7 @@ import java.util.List;
 
 import az.company.onlinelibrarysystem.dto.request.UserRequest;
 import az.company.onlinelibrarysystem.dto.response.UserResponse;
-import az.company.onlinelibrarysystem.entity.User;
-import az.company.onlinelibrarysystem.entity.Role;
+import az.company.onlinelibrarysystem.enums.Role;
 
 public interface UserService {
 

@@ -1,6 +1,6 @@
 package az.company.onlinelibrarysystem.repository;
 
-import az.company.onlinelibrarysystem.entity.Role;
+import az.company.onlinelibrarysystem.enums.Role;
 import az.company.onlinelibrarysystem.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 

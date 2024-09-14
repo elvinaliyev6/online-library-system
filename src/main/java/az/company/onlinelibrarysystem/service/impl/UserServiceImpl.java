@@ -2,7 +2,7 @@ package az.company.onlinelibrarysystem.service.impl;
 
 import az.company.onlinelibrarysystem.dto.request.UserRequest;
 import az.company.onlinelibrarysystem.dto.response.UserResponse;
-import az.company.onlinelibrarysystem.entity.Role;
+import az.company.onlinelibrarysystem.enums.Role;
 import az.company.onlinelibrarysystem.entity.User;
 import az.company.onlinelibrarysystem.enums.EnumAvailableStatus;
 import az.company.onlinelibrarysystem.exception.CustomException;

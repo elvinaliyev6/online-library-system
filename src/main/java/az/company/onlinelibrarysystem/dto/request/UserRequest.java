@@ -1,6 +1,6 @@
 package az.company.onlinelibrarysystem.dto.request;
 
-import az.company.onlinelibrarysystem.entity.Role;
+import az.company.onlinelibrarysystem.enums.Role;
 import lombok.Data;
 
 import javax.validation.constraints.Email;

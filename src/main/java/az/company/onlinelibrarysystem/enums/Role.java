@@ -1,4 +1,4 @@
-package az.company.onlinelibrarysystem.entity;
+package az.company.onlinelibrarysystem.enums;
 
 public enum Role {
     SUPERADMIN,

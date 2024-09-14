@@ -1,5 +1,6 @@
 package az.company.onlinelibrarysystem.entity;
 
+import az.company.onlinelibrarysystem.enums.Role;
 import jakarta.persistence.*;
 import lombok.Data;
 
