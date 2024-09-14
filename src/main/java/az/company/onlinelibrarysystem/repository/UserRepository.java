@@ -10,11 +10,11 @@ import java.util.Optional;
 public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByIdAndStatus(Long id, Integer status);
 
-    User findByUsernameAndStatus(String usernam, Integer status);
+    Optional<User> findByUsernameAndStatus(String usernam, Integer status);
 
     List<User> findByRoleAndStatus(Role role, Integer status);
 
-    Object findByEmailAndStatus(String email,Integer status);
+    Optional<User> findByEmailAndStatus(String email,Integer status);
 
     List<User> findAllByStatus(Integer status);
 }

@@ -10,6 +10,7 @@ import az.company.onlinelibrarysystem.repository.UserRepository;
 import az.company.onlinelibrarysystem.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,13 +23,14 @@ import java.util.stream.Collectors;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
 
     @Override
     public UserResponse addUser(UserRequest userRequest) {
         User user = new User();
         BeanUtils.copyProperties(userRequest, user);
-
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         checkEmailAndUsername(userRequest);
 
         User savedUser = userRepository.save(user);
@@ -38,11 +40,13 @@ public class UserServiceImpl implements UserService {
     }
 
     private void checkEmailAndUsername(UserRequest userRequest) {
-        if (Objects.nonNull(userRepository.findByUsernameAndStatus(userRequest.getUsername(),EnumAvailableStatus.ACTIVE.getCode()))) {
+        if (userRepository
+                .findByUsernameAndStatus(userRequest.getUsername(), EnumAvailableStatus.ACTIVE.getCode()).isPresent()) {
             throw new CustomException("Username already exists");
         }
 
-        if (Objects.nonNull(userRepository.findByEmailAndStatus(userRequest.getEmail(),EnumAvailableStatus.ACTIVE.getCode()))) {
+        if (userRepository
+                .findByEmailAndStatus(userRequest.getEmail(), EnumAvailableStatus.ACTIVE.getCode()).isPresent()) {
             throw new CustomException("Email already exists");
         }
     }
@@ -52,6 +56,7 @@ public class UserServiceImpl implements UserService {
         User user = getUser(userRepository.findByIdAndStatus(id, EnumAvailableStatus.ACTIVE.getCode()));
         checkEmailAndUsername(userRequest);
         BeanUtils.copyProperties(userRequest, user);
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         User updatedUser = userRepository.save(user);
         UserResponse userResponse = new UserResponse();
         BeanUtils.copyProperties(updatedUser, userResponse);
@@ -91,10 +96,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserResponse getUserByUsername(String username) {
-        User user = userRepository.findByUsernameAndStatus(username,EnumAvailableStatus.ACTIVE.getCode());
-        if (user == null) {
-            throw new CustomException("User not found with username: " + username);
-        }
+        User user = userRepository.findByUsernameAndStatus(username, EnumAvailableStatus.ACTIVE.getCode())
+                .orElseThrow(() -> new CustomException("User not found with username: " + username));
         UserResponse userResponse = new UserResponse();
         BeanUtils.copyProperties(user, userResponse);
         return userResponse;
