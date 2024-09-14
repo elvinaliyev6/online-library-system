@@ -3,8 +3,9 @@ package az.company.onlinelibrarysystem.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -26,9 +27,10 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // Disable CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/users/**").permitAll()  // Allow registration without authentication
-                        .requestMatchers("/admin/**").hasRole("ADMIN")      // Admin-only endpoints
-                        .anyRequest().authenticated()                       // All other endpoints require authentication
+                        .requestMatchers("/**").hasRole("SUPERADMIN")
+                        .requestMatchers("/api/books/**").hasAuthority("ADMIN")  // Allow registration without authentication
+                        .requestMatchers("/api/books/search", "/api//books/filter").hasAuthority("USER")  // Allow registration without authentication
+                        .anyRequest().permitAll()                       // All other endpoints require authentication
                 )
                 .httpBasic(withDefaults());  // Use updated httpBasic configuration
 
@@ -48,7 +50,10 @@ public class SecurityConfig {
         return authProvider;
     }
 
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.authenticationProvider(authenticationProvider());
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 }
+
+
