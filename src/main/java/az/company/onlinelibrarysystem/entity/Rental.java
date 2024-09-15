@@ -16,6 +16,9 @@ public class Rental {
     private LocalDate rentalDate;
     private LocalDate returnDate;
 
+    @Column(name = "active", nullable = false)
+    private boolean active;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
