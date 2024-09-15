@@ -3,7 +3,7 @@ package az.company.onlinelibrarysystem.service.impl;
 import az.company.onlinelibrarysystem.exception.CustomException;
 import az.company.onlinelibrarysystem.repository.AuthorRepository;
 import az.company.onlinelibrarysystem.repository.BookRepository;
-import az.company.onlinelibrarysystem.dto.BookRequest;
+import az.company.onlinelibrarysystem.dto.request.BookRequest;
 import az.company.onlinelibrarysystem.dto.response.BookResponse;
 import az.company.onlinelibrarysystem.entity.Author;
 import az.company.onlinelibrarysystem.entity.Book;

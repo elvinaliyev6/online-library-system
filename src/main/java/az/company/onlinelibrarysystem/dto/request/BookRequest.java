@@ -1,4 +1,4 @@
-package az.company.onlinelibrarysystem.dto;
+package az.company.onlinelibrarysystem.dto.request;
 
 import lombok.Data;
 

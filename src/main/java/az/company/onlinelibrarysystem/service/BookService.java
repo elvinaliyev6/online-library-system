@@ -1,8 +1,7 @@
 package az.company.onlinelibrarysystem.service;
 
-import az.company.onlinelibrarysystem.dto.BookRequest;
+import az.company.onlinelibrarysystem.dto.request.BookRequest;
 import az.company.onlinelibrarysystem.dto.response.BookResponse;
-import az.company.onlinelibrarysystem.entity.Book;
 
 import java.util.List;
 

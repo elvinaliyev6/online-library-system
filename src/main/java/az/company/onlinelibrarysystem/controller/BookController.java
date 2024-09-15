@@ -1,12 +1,11 @@
 package az.company.onlinelibrarysystem.controller;
 
-import az.company.onlinelibrarysystem.dto.BookRequest;
+import az.company.onlinelibrarysystem.dto.request.BookRequest;
 import az.company.onlinelibrarysystem.dto.response.BookResponse;
 import az.company.onlinelibrarysystem.service.BookService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

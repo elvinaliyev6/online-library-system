@@ -27,9 +27,9 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // Disable CSRF
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/**").hasRole("SUPERADMIN")
-                        .requestMatchers("/api/books/**").hasAuthority("ADMIN")  // Allow registration without authentication
-                        .requestMatchers("/api/books/search", "/api//books/filter").hasAuthority("USER")  // Allow registration without authentication
+//                        .requestMatchers("/**").hasRole("SUPERADMIN")
+//                        .requestMatchers("/api/books/**").hasAuthority("ADMIN")  // Allow registration without authentication
+//                        .requestMatchers("/api/books/search", "/api//books/filter").hasAuthority("USER")  // Allow registration without authentication
                         .anyRequest().permitAll()                       // All other endpoints require authentication
                 )
                 .httpBasic(withDefaults());  // Use updated httpBasic configuration
