@@ -4,6 +4,7 @@ import az.company.onlinelibrarysystem.entity.Rental;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface RentalRepository extends JpaRepository<Rental,Long> {
@@ -17,4 +18,7 @@ public interface RentalRepository extends JpaRepository<Rental,Long> {
     List<Object[]> findUserActivityReport();
 
     List<Rental> findByBookId(Long bookId);
+    List<Rental> findByUserIdAndActiveTrue(Long userId);
+    List<Rental> findByBookIdAndActiveTrue(Long bookId);
+    List<Rental> findByReturnDateBeforeAndActiveTrue(LocalDate currentDate);
 }
