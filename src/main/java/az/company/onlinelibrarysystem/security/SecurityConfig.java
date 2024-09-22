@@ -1,6 +1,5 @@
 package az.company.onlinelibrarysystem.security;
 
-
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,8 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-
-import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 public class SecurityConfig {
@@ -25,14 +22,22 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable())  // Disable CSRF
+                .csrf(csrf -> csrf.disable())  // Disable CSRF for simplicity; enable for production
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers("/**").hasRole("SUPERADMIN")
-//                        .requestMatchers("/api/books/**").hasAuthority("ADMIN")  // Allow registration without authentication
-//                        .requestMatchers("/api/books/search", "/api//books/filter").hasAuthority("USER")  // Allow registration without authentication
-                        .anyRequest().permitAll()                       // All other endpoints require authentication
+                        .requestMatchers("/api/auth/**").permitAll()  // Allow register and login endpoints
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")  // Only ADMIN can access admin endpoints
+                        .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")  // Allow both USER and ADMIN roles to access user endpoints
+                        .anyRequest().authenticated()  // Require authentication for all other requests
                 )
-                .httpBasic(withDefaults());  // Use updated httpBasic configuration
+                .formLogin(form -> form
+                        .loginPage("/api/auth/login")  // Custom login URL
+                        .permitAll()
+                )
+                .logout(logout -> logout
+                        .logoutUrl("/api/auth/logout")
+                        .logoutSuccessUrl("/api/auth/login?logout")
+                        .permitAll()
+                );
 
         return http.build();
     }
@@ -55,5 +60,3 @@ public class SecurityConfig {
         return authenticationConfiguration.getAuthenticationManager();
     }
 }
-
-
