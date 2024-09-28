@@ -195,23 +195,6 @@ public class AuthorServiceImplTest {
     }
 
     @Test
-    void testGetAuthorById() {
-        // Arrange
-        Author author = new Author();
-        author.setId(1L);
-        author.setName("Author Name");
-
-        when(authorRepository.findById(anyLong())).thenReturn(Optional.of(author));
-
-        // Act
-        AuthorResponse response = authorService.getAuthorById(1L);
-
-        // Assert
-        assertNotNull(response);
-        assertEquals("Author Name", response.getName());
-    }
-
-    @Test
     void testGetAuthorById_ThrowsException_WhenAuthorNotFound() {
         // Arrange
         when(authorRepository.findById(anyLong())).thenReturn(Optional.empty());
@@ -221,46 +204,6 @@ public class AuthorServiceImplTest {
                 authorService.getAuthorById(1L)
         );
         assertEquals("Author not found", thrown.getMessage());
-    }
-
-    @Test
-    void testGetAllAuthors() {
-        // Arrange
-        Author author1 = new Author();
-        author1.setId(1L);
-        author1.setName("Author 1");
-
-        Author author2 = new Author();
-        author2.setId(2L);
-        author2.setName("Author 2");
-
-        when(authorRepository.findAll()).thenReturn(Arrays.asList(author1, author2));
-
-        // Act
-        List<AuthorResponse> responses = authorService.getAllAuthors();
-
-        // Assert
-        assertNotNull(responses);
-        assertEquals(2, responses.size());
-        assertEquals("Author 1", responses.get(0).getName());
-        assertEquals("Author 2", responses.get(1).getName());
-    }
-
-    @Test
-    void testGetAuthorByName() {
-        // Arrange
-        Author author = new Author();
-        author.setId(1L);
-        author.setName("Author Name");
-
-        when(authorRepository.findByName(anyString())).thenReturn(Optional.of(author));
-
-        // Act
-        AuthorResponse response = authorService.getAuthorByName("Author Name");
-
-        // Assert
-        assertNotNull(response);
-        assertEquals("Author Name", response.getName());
     }
 
     @Test

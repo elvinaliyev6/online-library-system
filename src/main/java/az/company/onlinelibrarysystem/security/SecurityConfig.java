@@ -24,19 +24,31 @@ public class SecurityConfig {
         http
                 .csrf(csrf -> csrf.disable())  // Disable CSRF for simplicity; enable for production
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/auth/**").permitAll()  // Allow register and login endpoints
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")  // Only ADMIN can access admin endpoints
-                        .requestMatchers("/api/user/**").hasAnyRole("USER", "ADMIN")  // Allow both USER and ADMIN roles to access user endpoints
-                        .anyRequest().authenticated()  // Require authentication for all other requests
-                )
-                .formLogin(form -> form
-                        .loginPage("/api/auth/login")  // Custom login URL
-                        .permitAll()
-                )
-                .logout(logout -> logout
-                        .logoutUrl("/api/auth/logout")
-                        .logoutSuccessUrl("/api/auth/login?logout")
-                        .permitAll()
+                                .anyRequest()
+                                .permitAll()
+
+//                        .requestMatchers("/api/auth/**").permitAll()  // Allow register and login endpoints
+//                        .requestMatchers("/api/**").hasAuthority("ROLE_SUPERADMIN")  // Only ADMIN can access admin endpoints
+//                        .requestMatchers("/api/books/**",
+//                                "api/reservations/**",
+//                                "api/notifications/**",
+//                                "api/reports/**",
+//                                "api/books/**",
+//                                "api/authors/**").hasRole("ADMIN")
+//                        .requestMatchers("api/books/search",
+//                                "api/books/filter",
+//                                "api/books/author",
+//                                "api/books/count",
+//                                "api/notifications/**",
+//                                "api/users/**").hasRole("USER")
+//                        // Allow both USER and ADMIN roles to access user endpoints
+//                        .anyRequest().authenticated()  // Require authentication for all other requests
+//                )
+//                .formLogin().disable()  // Disable form login
+//                .logout(logout -> logout
+//                        .logoutUrl("/api/auth/logout")
+//                        .logoutSuccessUrl("/api/auth/login?logout")
+//                        .permitAll()
                 );
 
         return http.build();

@@ -1,11 +1,11 @@
 package az.company.onlinelibrarysystem.dto.request;
 
 import az.company.onlinelibrarysystem.enums.Role;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Data
 public class UserRequest {
