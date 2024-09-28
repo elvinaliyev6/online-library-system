@@ -5,13 +5,13 @@ import az.company.onlinelibrarysystem.dto.response.UserResponse;
 import az.company.onlinelibrarysystem.enums.Role;
 import az.company.onlinelibrarysystem.service.EmailService;
 import az.company.onlinelibrarysystem.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController

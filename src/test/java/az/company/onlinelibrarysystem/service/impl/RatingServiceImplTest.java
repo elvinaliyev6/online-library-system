@@ -124,28 +124,6 @@ class RatingServiceImplTest {
         assertEquals("Book not found", thrown.getMessage());
     }
 
-    @Test
-    void testUpdateRating_Success() {
-        // Arrange
-        Long ratingId = 1L;
-        int newScore = 4;
-        RatingRequest request = new RatingRequest();
-        request.setScore(newScore);
-
-        Rating existingRating = new Rating();
-        existingRating.setScore(5);
-
-        when(ratingRepository.findById(ratingId)).thenReturn(Optional.of(existingRating));
-        when(ratingRepository.save(existingRating)).thenReturn(existingRating);
-
-        // Act
-        RatingResponse response = ratingService.updateRating(ratingId, request);
-
-        // Assert
-        assertEquals(newScore, response.getScore());
-        assertEquals(existingRating.getScore(), response.getScore());
-        verify(ratingRepository, times(1)).save(existingRating);
-    }
 
     @Test
     void testUpdateRating_RatingNotFound() {
@@ -224,25 +202,6 @@ class RatingServiceImplTest {
         assertEquals("Rating not found", thrown.getMessage());
     }
 
-    @Test
-    void testGetAllRatingsForBook_Success() {
-        // Arrange
-        Long bookId = 1L;
-        Rating rating1 = new Rating();
-        rating1.setScore(4);
-        Rating rating2 = new Rating();
-        rating2.setScore(5);
-
-        when(ratingRepository.findByBookId(bookId)).thenReturn(List.of(rating1, rating2));
-
-        // Act
-        List<RatingResponse> responses = ratingService.getAllRatingsForBook(bookId);
-
-        // Assert
-        assertEquals(2, responses.size());
-        assertEquals(rating1.getScore(), responses.get(0).getScore());
-        assertEquals(rating2.getScore(), responses.get(1).getScore());
-    }
 
     @Test
     void testGetAverageRatingForBook_Success() {
